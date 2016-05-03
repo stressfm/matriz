@@ -1,0 +1,10 @@
+- name: Set ufw to allow rtsp
+  ufw: rule=allow port="8554:8600"
+  tags: 
+    - ufw
+
+- name: Restart ufw
+  ufw: state=restarted
+  tags: 
+    - ufw
+

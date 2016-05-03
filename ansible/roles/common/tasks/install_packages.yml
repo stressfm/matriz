@@ -1,0 +1,62 @@
+---
+- name: Add matriz repo key
+  apt_key: url=http://matriz.stress.fm/deb_repo/matriz_deb.gpg.asc state=present 
+
+- name: Add matriz repo
+  apt_repository: repo='deb http://matriz.stress.fm/deb_repo jessie main' state=present
+  tags:
+      - packages
+      - apt
+
+- name: update the apt-cache
+  apt: update_cache=yes
+  tags:
+      - cache 
+      - packages 
+
+- name: install common package dependencies
+  apt: >
+        pkg={{ item }}  
+        state=latest
+        force=yes
+  with_items:
+    - build-essential
+    - python 
+    - python-dev
+    - python-setuptools
+    - libjpeg-dev
+    - libtiff-dev 
+    - zlib1g-dev 
+    - libfreetype6-dev 
+    - liblcms2-dev
+    - python-opencv
+    - python-numpy
+    - openjdk-7-jre-headless
+    - python-pip
+    - bash
+    - openssl
+    - libssl-dev
+    - git
+    - supervisor
+    - ufw
+    - fail2ban
+    - jackd2 
+    - qjackctl 
+    - jackd-tools
+    - python-gst 
+    - gst-rtsp-server
+    - vim 
+    - gstrtspserver-1.0
+    - gstreamer1.0-plugins-bad 
+    - gstreamer1.0-plugins-ugly
+    - libgstreamer-1.0
+    - libgstrtspserver-1.0
+
+  tags:
+      - packages 
+
+- name: safe upgrade 
+  apt: upgrade=safe force=yes
+  tags:
+      - upgrade 
+      - packages

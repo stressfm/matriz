@@ -1,0 +1,16 @@
+- name: apply common configuration to all nodes
+  hosts: all 
+  sudo: yes 
+  user: "{{ deploy_user }}" 
+  roles:
+      - role: common
+
+- name: deploy and configure the client
+  hosts: all
+  sudo: yes 
+  user: "{{ deploy_user }}"
+  roles:
+      - role: client
+  tags:
+      - client
+

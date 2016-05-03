@@ -1,0 +1,6 @@
+env
+tmp
+etc_matriz_example
+*.pyc
+.*.swp
+mnt

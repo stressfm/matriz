@@ -1,0 +1,10 @@
+{
+    "python": true,
+    "key": "key666",
+    "name": "marte",
+    "url": "ws://matriz.stress.fm/config",
+    "record": false,
+    "client_pem": "",
+    "client_crt": "",
+    "ca_crt": ""
+}

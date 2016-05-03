@@ -1,0 +1,25 @@
+---
+- name: install npm repos from nodesource 
+  sudo: yes
+  shell: curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
+  tags:
+     - npm
+
+- name: update the apt-cache
+  apt: update_cache=yes 
+  sudo: yes
+  tags:
+    - npm
+
+- name: install npm and dependencies
+  sudo: yes
+  apt: >
+        pkg={{ item }}  
+        state=latest
+        force=yes
+  with_items:
+    - nodejs 
+  tags:
+    - npm
+    - node
+

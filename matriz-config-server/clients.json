@@ -1,0 +1,9 @@
+{
+  "client_keys": [
+    {"name": "porto", "key": "key1"},
+    {"name": "montemor", "key": "key2"},
+    {"name": "lisboa", "key": "key3"},
+    {"name": "marte", "key": "key666"}
+  ],
+  "monitor_key": {"name": "monitor", "key": "monitorkey"}
+}

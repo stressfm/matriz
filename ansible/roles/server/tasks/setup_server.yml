@@ -1,0 +1,15 @@
+---
+- name: Pull from git repo 
+  git: {{ project_repo }}
+  sudo: no
+  args:
+      chdir: "{{ deploy_dir }}/{{ project_name }}"
+  tags:
+      - server
+
+- name: Install/update modules from requirements.txt inside virtualenv
+  pip: virtualenv={{ virtualenvs_dir }}/{{ project_name }}-env 
+       requirements={{ deploy_dir }}/{{ project_name }}/requirements/server.txt
+  tags:
+      -  server
+

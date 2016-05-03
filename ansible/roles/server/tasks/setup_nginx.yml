@@ -1,0 +1,102 @@
+---
+- name: Ensure the Nginx is installed
+  apt: name=nginx state=latest update_cache=yes
+  tags:
+      - nginx 
+
+- name: Ensure that the Nginx service is stopped
+  service: name=nginx state=stopped
+  tags:
+      - nginx 
+ 
+- name:  Nginx config NO SSL
+  template: src=nginx.j2
+            dest=/etc/nginx/sites-available/{{ project_name }}
+            backup=yes
+  when: not use_ssl|bool
+  tags:
+    - no_ssl
+    - nginx 
+
+- name: Ensure the SSL Directory exists
+  file: path=/svr/ssl/
+        state=directory
+        owner=root
+        group=root
+  sudo: yes
+  when: use_ssl|bool
+  tags:
+      - nginx
+      - ssl 
+
+
+- name: Copy the private key file 
+  copy: src={{ keystore_path }}/{{ssl_private_key}} 
+        dest=/svr/ssl/{{ssl_private_key}}  
+        owner=root
+        group=root
+  sudo: yes
+  when: use_ssl|bool 
+  tags:
+    - ssl 
+    - nginx
+
+- name: Copy the SSL bundle (public key) 
+  copy: src={{ keystore_path }}/{{ ssl_cert }} 
+        dest=/svr/ssl/{{ ssl_cert }}
+        owner=root 
+        group=root
+  sudo: yes
+  when: use_ssl|bool 
+  tags:
+    - ssl
+    - nginx
+
+- name: Generate the stronger DHE parameters
+  command: openssl dhparam -out dhparam.pem 2048
+  args:
+    chdir: /svr/ssl
+    creates: /srv/ssl/dhparam.pem
+  sudo: yes
+  when: use_ssl|bool 
+  tags:
+      - nginx
+      - ssl 
+
+
+- name: Comodo SSL bundle for OCSP stapling 
+  copy: src={{ keystore_path }}/{{ ca_cert }} 
+        dest=/svr/ssl/{{ ca_cert }}
+        owner=root 
+        group=root
+  sudo: yes
+  when: use_ssl|bool 
+  tags:
+    - ssl
+    - nginx
+
+
+- name: Nginx Config YES SSL 
+  template: src=nginx_ssl.j2
+            dest=/etc/nginx/sites-available/{{ project_name }}
+            backup=yes
+  when: use_ssl|bool 
+  tags:
+    - ssl
+    - nginx 
+
+- name: Ensure that the default site is disabled
+  command: rm /etc/nginx/sites-enabled/default
+           removes=/etc/nginx/sites-enabled/default
+  tags:
+      - nginx 
+      - ssl 
+
+- name: enable the site 
+  file: src=/etc/nginx/sites-available/{{ project_name }} 
+      dest=/etc/nginx/sites-enabled/{{ project_name }} state=link
+  notify: restart nginx
+  tags:
+      - nginx 
+      - ssl
+      - nginx_enable

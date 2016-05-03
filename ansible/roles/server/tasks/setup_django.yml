@@ -1,0 +1,66 @@
+---
+- name: Pull/And update from hg repo 
+  shell: hg pull
+      && hg update
+  sudo: no
+  when: vcs == 'hg'
+  args:
+      chdir: "{{ sites_dir }}/{{ project_name }}"
+  tags:
+      - django
+
+- name: Pull from git repo 
+  shell: git pull
+  sudo: no
+  when: vcs == 'git'
+  args:
+      chdir: "{{ sites_dir }}/{{ project_name }}"
+  tags:
+      - django
+
+- name: Install/update apps required by the Django app inside virtualenv
+  pip: virtualenv={{ virtualenvs_dir }}/{{ project_name }}-env 
+       requirements={{ sites_dir }}/{{ project_name }}/requirements/production.txt
+  tags:
+      -  django
+
+- name: Run Django migrations
+  shell: . {{ virtualenvs_dir }}/{{ project_name }}-env/bin/activate
+      && python manage.py migrate --fake-initial --noinput --settings={{ project_name }}.settings.production
+  environment: "{{ django_env }}"
+  sudo: no
+  args:
+     chdir: "{{ sites_dir }}/{{ project_name }}"
+  tags:
+      - django
+
+- name: Create Django SuperUser 
+  shell: . {{ virtualenvs_dir }}/{{ project_name }}-env/bin/activate
+          && echo "from django.contrib.auth.models import User;User.objects.create_superuser(username='{{ django_env.DJANGO_ADMIN_USER }}', email='{{ django_env.DJANGO_ADMIN_EMAIL }}', password='{{ django_env.DJANGO_ADMIN_PASSWD }}')" | ./manage.py shell
+  environment: "{{ django_env }}"
+  sudo: no
+  args:
+     chdir: "{{ sites_dir }}/{{ project_name }}"
+  tags:
+      - django
+      - superuser
+
+- name: Run Django collectstatic
+  shell: . {{ virtualenvs_dir }}/{{ project_name }}-env/bin/activate
+         && python manage.py collectstatic --noinput --settings={{ project_name }}.settings.production
+  environment: "{{ django_env }}"
+  sudo: no
+  args:
+    chdir: "{{ sites_dir }}/{{ project_name }}"
+  tags:
+      - django
+
+- name: Run Django compress
+  shell: . {{ virtualenvs_dir }}/{{ project_name }}-env/bin/activate
+        && python manage.py compress --settings={{ project_name }}.settings.production
+  environment: "{{ django_env }}"
+  sudo: no
+  args:
+    chdir: "{{ sites_dir }}/{{ project_name }}"
+  tags:
+    - django

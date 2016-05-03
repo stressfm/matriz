@@ -1,0 +1,12 @@
+backports.ssl-match-hostname
+Flask
+Flask-uWSGI-WebSocket
+gevent
+greenlet
+itsdangerous
+Jinja2
+MarkupSafe
+six
+uWSGI
+Werkzeug
+wheel

@@ -1,0 +1,29 @@
+---
+- hosts: clients
+  sudo: no
+  user: pi
+
+  tasks:
+
+    - name: Pull code from remote repo
+      git: repo={{ project_repo }}
+           accept_hostkey=yes
+           dest={{ deploy_dir }}/{{ project_name }}
+           key_file={{ deploy_dir }}/.ssh/id_rsa
+
+    - name: Update requirements
+      pip: requirements={{ deploy_dir }}/{{ project_name }}/{{ client_dir }}/requirements.txt
+
+
+    - name: Restart jackd
+      supervisorctl: name=jackd state=restarted config=/home/pi/.supervisord.conf
+      tags:
+            - restart 
+            - jackd
+
+    - name: Restart client 
+      supervisorctl: name=matriz-client state=restarted config=/home/pi/.supervisord.conf
+      tags:
+            - restart 
+            - client
+
