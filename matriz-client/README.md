@@ -1,4 +1,4 @@
-Configure client by editing test_client.json
+1. Configure client by editing test_client.json
 
 ```javascript
 {
@@ -22,7 +22,7 @@ Configure client by editing test_client.json
 `client_crt:` openssl client certificate  
 `ca_crt:` openssl server certificate  
 
-start client:
+2. Start client:
 
 ```bash
 $ python client.py test_client.json
