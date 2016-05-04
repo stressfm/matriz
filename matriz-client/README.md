@@ -13,7 +13,7 @@ Configure client by editing test_client.json
 }
 ```
 
-`key:` supposed to be unique id for client
+`key:` supposed to be unique id for client  
 `name:` some label  identifying the client  
 `url:` the configuration server url  
 `interface:` network card to start de emitter on  
