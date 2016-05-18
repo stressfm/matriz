@@ -61,7 +61,7 @@ In the machine where the server will run, server dependencies must be explicitly
 
 .. code-block:: bash
 
-  pip install matriz
+  pip install matriz[server]
 
 In both cases external dependencies must be installed for the program to work. For the client:
 
