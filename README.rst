@@ -12,12 +12,8 @@ Matriz
         :target: https://badge.fury.io/py/matriz
 
 
-Matriz is a 
-.. _Networked Music Performance: https://en.wikipedia.org/wiki/Networked_music_performance 
-software.  
-
+Matriz is a `Networked Music Performance <https://en.wikipedia.org/wiki/Networked_music_performance>`_ software.  
 The intended use is allowing real time musical performance of artists in different locations through computer networks.
-
 The name "matriz" is portuguese for "matrix".
 
 
@@ -25,7 +21,7 @@ Why?
 ----
 
 Tools like 
-.. _jacktrip: https://ccrma.stanford.edu/groups/soundwire/software/jacktrip/
+`jacktrip <https://ccrma.stanford.edu/groups/soundwire/software/jacktrip/>`_
 are built to work in high bandwidth academic networks like the internet2 or GEANT networks. 
 Matriz is built to offer the lowest latencies possible, while using the lest bandwidth possible. 
 This allows musician to have low latency high quality music streaming using domestic network connections.
@@ -51,17 +47,13 @@ Installation
 
 Using PyPi
 ..........
-To install the program just to use the client
+To install the program just to use the client::
 
-.. code-block:: bash
+    $ pip install matriz
 
-  pip install matriz
+In the machine where the server will run, server dependencies must be explicitly installed::
 
-In the machine where the server will run, server dependencies must be explicitly installed
-
-.. code-block:: bash
-
-  pip install matriz[server]
+    $ pip install matriz[server]
 
 In both cases external dependencies must be installed for the program to work. For the client:
 
@@ -87,34 +79,29 @@ Usage
 Client
 ......
 
-To use the client open a shell and just type
+To use the client open a shell and just type::
 
-.. code-block:: bash
-
-  matriz
+    $ matriz
 
 without arguments, to start the client. The program will try to read configuration options from a file 
 called client.json in the same directory where the program was invoked.
-If you want to use another filename, just give that as an argumento to the program:
+If you want to use another filename, just give that as an argumento to the program::
 
-.. code-block:: bash
-
-  matriz <filename>
+    $ matriz <filename>
 
 An example configuration file is in config/client.json:
 
 .. code-block:: json
-{
-    "key": "key1",
-    "name": "porto",
-    "url": "ws://localhost:5000/config",
-    "interface": "eth0",
-    "port": 8554
-    "client_pem": "fake_client.pem",
-    "client_crt": "fake_client.crt",
-    "ca_crt": "fake_ca.crt"
-}
-```
+    {
+        "key": "key1",
+        "name": "porto",
+        "url": "ws://localhost:5000/config",
+        "interface": "eth0",
+        "port": 8554
+        "client_pem": "fake_client.pem",
+        "client_crt": "fake_client.crt",
+        "ca_crt": "fake_ca.crt"
+    }
 
 `key:` supposed to be unique id for client  
 `name:` some label  identifying the client  
@@ -125,11 +112,9 @@ An example configuration file is in config/client.json:
 `client_crt:` openssl client certificate  
 `ca_crt:` openssl server certificate  
 
-To get a list of command line arguments type:
+To get a list of command line arguments type::
 
-.. code-block:: bash
-
-  matriz -h
+  $ matriz -h
 
 Server
 ......
