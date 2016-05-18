@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>faz &mdash; faz 0.1.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="faz 0.1.2 documentation" href="index.html" />
+    <link rel="next" title="Installation" href="installation.html" />
+    <link rel="prev" title="Welcome to faz’s documentation!" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to faz’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">faz 0.1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="faz">
+<h1>faz<a class="headerlink" href="#faz" title="Permalink to this headline">¶</a></h1>
+<a class="reference external image-reference" href="http://badge.fury.io/py/faz"><img alt="https://badge.fury.io/py/faz.png" src="https://badge.fury.io/py/faz.png" /></a>
+<a class="reference external image-reference" href="https://travis-ci.org/hmartiniano/faz"><img alt="https://travis-ci.org/hmartiniano/faz.png?branch=master" src="https://travis-ci.org/hmartiniano/faz.png?branch=master" /></a>
+<a class="reference external image-reference" href="https://pypi.python.org/pypi/faz"><img alt="https://pypip.in/d/faz/badge.png" src="https://pypip.in/d/faz/badge.png" /></a>
+<p>Faz is a data workflow tool heavily inspired in .. _Drake: <a class="reference external" href="https://github.com/Factual/drake">https://github.com/Factual/drake</a></p>
+<p>The intended use is combining data treatment scripts in bash, python, ruby (or anything else, with a little coding) into a single text file.</p>
+<p>The name &#8220;faz&#8221; is portuguese for &#8220;do&#8221; or &#8220;make&#8221;.</p>
+<p>The various steps can be separated into tasks, with defined inputs and outputs. Dependencies between the tasks are determined from inputs and outputs of every task. The program executes all tasks in the appropriate order, checking for the existence of output and input files.</p>
+<div class="section" id="why">
+<h2>Why?<a class="headerlink" href="#why" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Because I like Drake but can&#8217;t stand the startup time of java.</li>
+<li>Because I can (actually to see if I can, but it turns out I can).</li>
+</ul>
+</div>
+<div class="section" id="features">
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>simple but robust functionality</li>
+<li>easy to use and extend (the code, minus the tests, is around 300 lines of python)</li>
+<li>fast startup time (compared to Drake)</li>
+<li>Documentation: <a class="reference external" href="https://faz.readthedocs.org">https://faz.readthedocs.org</a>.</li>
+</ul>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Using pypi</p>
+<div class="highlight-bash"><div class="highlight"><pre>pip install faz
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>From the command line, just type</p>
+<div class="highlight-bash"><div class="highlight"><pre>faz
+</pre></div>
+</div>
+<p>without arguments, the program will read the tasks from a file called &#8220;fazfile&#8221;.
+If you want to use another filename, just give that as an argumento to the program</p>
+<div class="highlight-bash"><div class="highlight"><pre>faz &lt;filename&gt;
+</pre></div>
+</div>
+<p>to get a list of command line arguments type</p>
+<div class="highlight-bash"><div class="highlight"><pre>faz -h
+</pre></div>
+</div>
+</div>
+<div class="section" id="task-file-basics">
+<h2>Task file basics<a class="headerlink" href="#task-file-basics" title="Permalink to this headline">¶</a></h2>
+<p>The task file is a plain text file, with a syntax similar to Drake input files.
+The following is an example with two tasks</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># file1 &lt;-</span>
+<span class="n">touch</span> <span class="n">file1</span>
+
+<span class="c"># file2 &lt;- file1</span>
+<span class="n">cat</span> <span class="n">file1</span> <span class="o">&gt;</span> <span class="n">file2</span>
+</pre></div>
+</div>
+<p>Lines starting with &#8220;#&#8221; and having the symbols &#8220;&lt;-&#8221; signal a task.
+On the left of the &#8220;&lt;-&#8221; is a (comma separated) list of the files produced by the task.
+On the right are the task dependencies, the files needed to run that task.
+In the above example the first task has no dependencies, and produces a file called &#8220;file1&#8221;.
+The second task has &#8220;file1&#8221; as a dependency, and has as output a file called &#8220;file2&#8221;.</p>
+<p>The outputs and inputs and inputs of each task are used by the program to estabilish the order
+by which the tasks have to be run, and if they need to be run. In the example above, if a file
+called &#8220;file1&#8221; was already present in the directory the program was run, the first task would not be executed.</p>
+<p>The code sections, are all the lines in betweeen the two task lines.
+In these two tasks, they are just are just plain bash commands but could be, for example, python code</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># file1 &lt;-</span>
+<span class="n">touch</span> <span class="n">file1</span>
+
+<span class="c"># file2 &lt;- file1 :python</span>
+<span class="n">f1</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;file1&quot;</span><span class="p">)</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">file1</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">f2</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;file2&quot;</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">)</span>
+<span class="n">f2</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>note that, in the second task, there&#8217;s an extra option &#8221;:python&#8221;, wich indicates to the program that
+the code from this task is python code.
+Options are a list of (comma separated) keywords follwing the &#8221;:&#8221;, and must be placed after the inputs.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">faz</a><ul>
+<li><a class="reference internal" href="#why">Why?</a></li>
+<li><a class="reference internal" href="#features">Features</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#task-file-basics">Task file basics</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to faz&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="next chapter">Installation</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/readme.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to faz’s documentation!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">faz 0.1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Hugo Martiniano.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

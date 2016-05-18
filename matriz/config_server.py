@@ -27,8 +27,8 @@ logging.basicConfig(
     level=logging.DEBUG)
 
 
-if "CONFIG_FILE" in os.environ:
-    config_file = os.environ['CONFIG_FILE']
+if "MATRIZ_CONFIG_FILE" in os.environ:
+    config_file = os.environ['MATRIZ_CONFIG_FILE']
 else:
     config_file = 'clients.json'
 
@@ -298,6 +298,9 @@ def socket_ws(ws):
     # if client.name != "webclient":
     client.deregister()
 
+
+def main():
+    app.run(gevent=100)
 
 if __name__ == "__main__":
 #    app.run(debug=True,

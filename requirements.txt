@@ -1,14 +1,1 @@
-backports.ssl-match-hostname
-Flask
-Flask-uWSGI-WebSocket
-gevent
-greenlet
-itsdangerous
-Jinja2
-MarkupSafe
-six
-uWSGI
-Werkzeug
-wheel
-websocket-client==0.35.0
-miniupnpc==1.9
+-r requirements/client.txt
