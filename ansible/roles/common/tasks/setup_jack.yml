@@ -1,5 +1,5 @@
 - name: Deploy the jackd Supervisor script
-  template: src=jackd.j2
+  template: src=jackd.conf.j2
         dest=/etc/supervisor/conf.d/jackd.conf
         backup=yes
   tags:

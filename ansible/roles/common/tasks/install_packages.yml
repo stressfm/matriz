@@ -20,37 +20,18 @@
         state=latest
         force=yes
   with_items:
-    - build-essential
-    - python 
-    - python-dev
-    - python-setuptools
-    - libjpeg-dev
-    - libtiff-dev 
-    - zlib1g-dev 
-    - libfreetype6-dev 
-    - liblcms2-dev
-    - python-opencv
-    - python-numpy
-    - openjdk-7-jre-headless
+	- jackd2 
+    - python-gst-1.0 
+    - libgstrtspserver-1.0
+    - gstreamer1.0-plugins-bad 
+    - libgstreamer-plugins-bad1.0
     - python-pip
-    - bash
     - openssl
     - libssl-dev
-    - git
     - supervisor
-    - ufw
-    - fail2ban
     - jackd2 
     - qjackctl 
     - jackd-tools
-    - python-gst 
-    - gst-rtsp-server
-    - vim 
-    - gstrtspserver-1.0
-    - gstreamer1.0-plugins-bad 
-    - gstreamer1.0-plugins-ugly
-    - libgstreamer-1.0
-    - libgstrtspserver-1.0
 
   tags:
       - packages 
