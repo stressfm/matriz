@@ -55,6 +55,25 @@ For any inquiries concerning the software or the project, contact us at info@str
 Installation
 ------------
 
+Prerequisites
+.............
+
+In both cases external dependencies must be installed for the program to work. For the client:
+
+* Jack
+* GStreamer, including the gst-rtsp-server package
+* Python bindings for gobject-introspection libraries
+
+These can be installed in Debian or Rapsbian whith the following command::
+
+	$ sudo apt install build-essential python python-dev python-setuptools libjpeg-dev libtiff-dev zlib1g-dev libfreetype6-dev liblcms2-dev python-opencv python-numpy openjdk-7-jre-headless python-pip openssl libssl-dev jackd2 python-gst gst-rtsp-server gstrtspserver-1.0 gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libgstreamer-1.0 libgstrtspserver-1.0
+
+For the server, if you want to stream the performance, you might want to install and configure:
+
+* liquidsoap (to receive and combine client streams)
+* icecast2 (to stream the combined audio from all clients)
+* GStreamer (to decode client streams)
+
 Using PyPi
 ..........
 To install the program just to use the client::
@@ -64,17 +83,6 @@ To install the program just to use the client::
 In the machine where the server will run, server dependencies must be explicitly installed::
 
     $ pip install matriz[server]
-
-In both cases external dependencies must be installed for the program to work. For the client:
-
-* Jack
-* GStreamer, including the gst-rtsp-server package
-
-For the server, if you want to stream the performance, you might want to install and configure:
-
-* liquidsoap (to receive and combine client streams)
-* icecast2 (to stream the combined audio from all clients)
-* GStreamer (to decode client streams)
 
 Using ansible
 .............
