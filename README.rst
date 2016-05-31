@@ -4,9 +4,6 @@ Matriz
 
 .. image:: https://badge.fury.io/py/matriz.png
     :target: http://badge.fury.io/py/matriz
-..
-.. image:: https://travis-ci.org/stressfm/matriz.png?branch=master
-        :target: https://travis-ci.org/stressfm/matriz
 
 .. image:: https://badge.fury.io/py/matriz.svg
         :target: https://badge.fury.io/py/matriz
@@ -20,10 +17,10 @@ The name "matriz" is portuguese for "matrix" and is inspired on the light and so
 Why?
 ----
 
-* Tools like `jacktrip <https://ccrma.stanford.edu/groups/soundwire/software/jacktrip/>`_
-are built to work in high bandwidth academic networks like the internet2 or GEANT networks. 
-Matriz is built to offer the lowest latencies possible, while using the lest bandwidth possible. 
-This allows musician to have low latency high quality music streaming using regular network connections.
+* Tools like `jacktrip <https://ccrma.stanford.edu/groups/soundwire/software/jacktrip/>`_are built 
+  to work in high bandwidth academic networks like the internet2 or GEANT networks. 
+  Matriz is built to offer the lowest latencies possible, while using the lest bandwidth possible. 
+  This allows musician to have low latency high quality music streaming using regular network connections.
 * For fun.
 
 Features
