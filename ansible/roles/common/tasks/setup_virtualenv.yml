@@ -24,7 +24,7 @@
       - venv
 
 - name: Add virtualenvwrapper init to the bash profile
-lineinfile: dest=/home/{{ deploy_user }}/.profile line="source /usr/local/bin/virtualenvwrapper.sh"
+  lineinfile: dest=/home/{{ deploy_user }}/.profile line="source /usr/local/bin/virtualenvwrapper.sh"
   sudo: no
   tags:
       - web

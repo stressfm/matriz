@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>faz.main &mdash; faz 0.1.2 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="faz 0.1.2 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">faz 0.1.2 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for faz.main</h1><div class="highlight"><pre>
+<span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">strftime</span>
+
+
+<span class="kn">from</span> <span class="nn">faz.parser</span> <span class="kn">import</span> <span class="n">parse_input_file</span>
+<span class="kn">from</span> <span class="nn">faz.graph</span> <span class="kn">import</span> <span class="n">DependencyGraph</span>
+
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<span class="n">BANNER</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">    __</span>
+<span class="s">   / _|</span>
+<span class="s">   | |_ __ _ ____</span>
+<span class="s">   |  _/ _` |_  /</span>
+<span class="s">   | || (_| |/ /</span>
+<span class="s">   |_| \__,_/___|</span>
+
+<span class="s">Developed by:</span>
+<span class="s">    Hugo Martiniano</span>
+
+<span class="s">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="faz"><a class="viewcode-back" href="../../faz.html#faz.main.faz">[docs]</a><span class="k">def</span> <span class="nf">faz</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">variables</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    YAMT program entry point.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;input file:</span><span class="se">\n</span><span class="s"> {0}</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">input_file</span><span class="p">))</span>
+    <span class="n">tasks</span> <span class="o">=</span> <span class="n">parse_input_file</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">variables</span><span class="o">=</span><span class="n">variables</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Found {0} tasks.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tasks</span><span class="p">)))</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">DependencyGraph</span><span class="p">(</span><span class="n">tasks</span><span class="p">)</span>
+    <span class="n">graph</span><span class="o">.</span><span class="n">show_tasks</span><span class="p">()</span>
+    <span class="n">graph</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+
+</div>
+<span class="k">def</span> <span class="nf">_create_parser</span><span class="p">():</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;input_file&#39;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                        <span class="n">nargs</span><span class="o">=</span><span class="s">&quot;?&quot;</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="s">&quot;fazfile&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-v&#39;</span><span class="p">,</span>
+                        <span class="s">&#39;--variables&#39;</span><span class="p">,</span>
+                        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+                        <span class="n">nargs</span><span class="o">=</span><span class="s">&quot;+&quot;</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="p">[])</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-d&#39;</span><span class="p">,</span>
+                        <span class="s">&#39;--debug&#39;</span><span class="p">,</span>
+                        <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_true&quot;</span><span class="p">,</span>
+                        <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">parser</span>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../faz.html#faz.main.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">arguments</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">_create_parser</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">arguments</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">BANNER</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">)):</span>
+        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s">&quot;file {} does not exist!</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">*******************&quot;</span> <span class="o">+</span>
+          <span class="s">&quot;  Program Started at: &quot;</span> <span class="o">+</span>
+          <span class="n">strftime</span><span class="p">(</span><span class="s">&quot;%Y-%m-</span><span class="si">%d</span><span class="s"> %H:%M:%S&quot;</span><span class="p">)</span> <span class="o">+</span>
+          <span class="s">&quot;  ******************</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span>
+            <span class="n">format</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%(levelname)s</span><span class="s"> </span><span class="si">%(filename)s</span><span class="s">: </span><span class="si">%(message)s</span><span class="s">&#39;</span><span class="p">,</span>
+            <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c"># Log info and above to console</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span>
+            <span class="c"># format=&#39;%(levelname)s: %(message)s&#39;,</span>
+            <span class="n">format</span><span class="o">=</span><span class="s">&#39;</span><span class="si">%(levelname)s</span><span class="s"> </span><span class="si">%(filename)s</span><span class="s">: </span><span class="si">%(message)s</span><span class="s">&#39;</span><span class="p">,</span>
+            <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span>
+        <span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Options:&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">(</span><span class="nb">vars</span><span class="p">(</span><span class="n">args</span><span class="p">))</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;{0}: {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">input_file</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">faz</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">variables</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">********************&quot;</span> <span class="o">+</span>
+          <span class="s">&quot;  Program Ended at: &quot;</span> <span class="o">+</span>
+          <span class="n">strftime</span><span class="p">(</span><span class="s">&quot;%Y-%m-</span><span class="si">%d</span><span class="s"> %H:%M:%S&quot;</span><span class="p">)</span> <span class="o">+</span>
+          <span class="s">&quot;  *******************</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">faz 0.1.2 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Hugo Martiniano.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

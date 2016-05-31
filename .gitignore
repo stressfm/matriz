@@ -1,7 +1,6 @@
 *~
 tmp
 .o
-*.vagrant
 apt-cache
 *pyc
 .python-version

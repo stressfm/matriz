@@ -17,14 +17,14 @@
       - venv
 
 - name: Add virtualenvwrapper init1 to the bash profile
-  lineinfile: dest=/home/django/.profile line="export WORKON_HOME=~/virtualenvs"
+  lineinfile: dest=/home/{{ deploy_user 0}/.profile line="export WORKON_HOME=~/.virtualenvs"
   sudo: no
   tags:
       - web
       - venv
 
 - name: Add virtualenvwrapper init to the bash profile
-  lineinfile: dest=/home/django/.profile line="source /usr/local/bin/virtualenvwrapper.sh"
+  lineinfile: dest=/home/{{ deploy_user }}/.profile line="source /usr/local/bin/virtualenvwrapper.sh"
   sudo: no
   tags:
       - web
@@ -39,29 +39,19 @@
       - web
       - venv
 
-- name: Pull/And update the source hg
-  sudo: no
-  shell: hg pull
-      && hg update
-  when: vcs == 'hg'
-  args:
-      chdir: "{{ sites_dir }}/{{ project_name }}"
-  tags:
-      - venv 
-
 - name: Pull/And update the source git 
   sudo: no
   shell: git pull
   when: vcs == 'git'
   args:
-      chdir: "{{ sites_dir }}/{{ project_name }}"
+      chdir: "{{ deploy_dir }}/{{ project_name }}"
   tags:
       - venv 
 
 - name: Install packages required by the Django app inside virtualenv
   sudo: no
   pip: virtualenv={{ virtualenvs_dir }}/{{ project_name }}-env 
-      requirements={{ sites_dir }}/{{ project_name }}/requirements/production.txt
+      requirements={{ sites_dir }}/{{ project_name }}/requirements/server.txt
   tags:
       - web
       - venv
@@ -78,12 +68,4 @@
       - venv 
       - postactivate 
 
-#- name: Build wagtail admin CSS because we're pulling from git
-#  sudo: no
-#  shell: npm install && npm run build
-#  args:
-#      chdir: "{{ virtualenvs_dir }}/{{ project_name }}-env/src/wagtail-master"
-#  tags:
-#      - web
-#      - venv
 
