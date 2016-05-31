@@ -1,23 +1,9 @@
 ---
-- name: Authorized hosts for bitbucket
-  shell: ssh-keyscan -H bitbucket.org >> /home/{{ deploy_user }}/.ssh/known_hosts
-  args:
-      creates: /home/{{ deploy_user }}/.ssh/known_hosts
-  sudo: no
-  tags:
-      - git
-
-- name: Create the Sites Directory if not present 
-  file: path={{ deploy_dir }} owner={{ deploy_user }} state=directory
-  sudo: no
-  tags:
-      - git
-
-- name: Clone git repo 
-  command: git clone {{ project_repo }} 
+- name: clone git repo 
+  git: clone name={{ project_repo }} 
   sudo: no
   args:
       chdir: "{{ deploy_dir }}"
       creates: "{{ deploy_dir }}/{{ project_name }}"
   tags:
-      - git
+      - server

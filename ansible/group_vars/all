@@ -1,6 +1,6 @@
-project_repo: git@bitbucket.org:stressfm/matriz-gst-launch.git
-project_name: matriz-gst-launch
-client_dir: matriz-client
+project_repo: https://github.com:stressfm/matriz.git
+project_name: matriz
+client_dir: matriz
 server_dir: matriz-config-server
 deploy_dir: /home/pi
 virtualenvs_dir: /home/pi/virtualenvs/

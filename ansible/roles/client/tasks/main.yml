@@ -11,34 +11,22 @@
 - name: Install/update requirement inside virtualenv
   sudo: no
   pip: virtualenv={{ virtualenvs_dir }}/{{ project_name }}-env 
-       requirements={{ deploy_dir }}/{{ project_name }}/requirements/client.txt
+       name=matriz
   tags:
       - client
       - dependencies
 
-#- name: Deploy client startup Script
-#  template: src=matriz-client.j2
-#            dest=/etc/supervisor/conf.d/matriz-client.conf
-#            backup=yes
-#  tags:
-#     - client
-
 - name: Deploy client startup Script
   template: src=supervisord.j2
-            dest=/home/pi/.supervisord.conf
+            dest=/etc/supervisor/conf.d/matriz-client.conf
             backup=yes
   tags:
      - client
      - supervisord
 
-- name: Re-read the Supervisor config files
+- name: Re-read the Supervisor config files and start app
   command: supervisorctl -c .supervisord.conf reread
-  tags:
-     - client
-     - supervisord
-
-- name: Update Supervisor to add the app in the process group
-  command: supervisorctl -c .supervisord.conf update
+- supervisorctl: name=matriz state=started
   tags:
      - client
      - supervisord
