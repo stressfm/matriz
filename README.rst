@@ -4,7 +4,7 @@ Matriz
 
 .. image:: https://badge.fury.io/py/matriz.png
     :target: http://badge.fury.io/py/matriz
-
+..
 .. image:: https://travis-ci.org/stressfm/matriz.png?branch=master
         :target: https://travis-ci.org/stressfm/matriz
 
@@ -21,9 +21,9 @@ Why?
 ----
 
 * Tools like `jacktrip <https://ccrma.stanford.edu/groups/soundwire/software/jacktrip/>`_
-    are built to work in high bandwidth academic networks like the internet2 or GEANT networks. 
-    Matriz is built to offer the lowest latencies possible, while using the lest bandwidth possible. 
-    This allows musician to have low latency high quality music streaming using regular network connections.
+are built to work in high bandwidth academic networks like the internet2 or GEANT networks. 
+Matriz is built to offer the lowest latencies possible, while using the lest bandwidth possible. 
+This allows musician to have low latency high quality music streaming using regular network connections.
 * For fun.
 
 Features

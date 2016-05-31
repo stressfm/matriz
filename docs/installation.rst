@@ -4,9 +4,9 @@ Installation
 
 At the command line::
 
-    $ easy_install faz
+    $ easy_install matriz
 
 Or, if you have virtualenvwrapper installed::
 
-    $ mkvirtualenv faz
-    $ pip install faz
+    $ mkvirtualenv matriz
+    $ pip install matriz

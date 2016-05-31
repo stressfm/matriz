@@ -1,7 +1,7 @@
-faz
+matriz
 ====
 
 .. toctree::
    :maxdepth: 4
 
-   faz
+   matriz

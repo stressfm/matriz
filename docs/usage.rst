@@ -2,6 +2,6 @@
 Usage
 ========
 
-To use faz in a project::
+To use matriz in a project::
 
-    import faz
+    import matriz

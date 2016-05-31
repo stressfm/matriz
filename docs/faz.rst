@@ -1,29 +1,29 @@
-faz package
+matriz package
 ============
 
 Submodules
 ----------
 
-faz.core module
+matriz.core module
 ----------------
 
-.. automodule:: faz.core
+.. automodule:: matriz.core
     :members:
     :undoc-members:
     :show-inheritance:
 
-faz.main module
+matriz.main module
 ----------------
 
-.. automodule:: faz.main
+.. automodule:: matriz.main
     :members:
     :undoc-members:
     :show-inheritance:
 
-faz.parser module
+matriz.parser module
 ------------------
 
-.. automodule:: faz.parser
+.. automodule:: matriz.parser
     :members:
     :undoc-members:
     :show-inheritance:
@@ -32,7 +32,7 @@ faz.parser module
 Module contents
 ---------------
 
-.. automodule:: faz
+.. automodule:: matriz
     :members:
     :undoc-members:
     :show-inheritance:
