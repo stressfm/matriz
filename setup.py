@@ -22,6 +22,8 @@ with open(path.join(here, 'LICENSE'), encoding='utf8') as f:
 
 test_requirements = [
     'coverage',
+    'bumpversion',
+    'twine',
 ]
 
 
