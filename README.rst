@@ -17,7 +17,7 @@ The name "matriz" is portuguese for "matrix" and is inspired on the light and so
 Why?
 ----
 
-* Tools like `jacktrip <https://ccrma.stanford.edu/groups/soundwire/software/jacktrip/>`_are built 
+* Tools like `jacktrip <https://ccrma.stanford.edu/groups/soundwire/software/jacktrip/>`_ are built 
   to work in high bandwidth academic networks like the internet2 or GEANT networks. 
   Matriz is built to offer the lowest latencies possible, while using the lest bandwidth possible. 
   This allows musician to have low latency high quality music streaming using regular network connections.
@@ -62,8 +62,10 @@ In both cases external dependencies must be installed for the program to work. F
 
 These can be installed in Debian or Rapsbian whith the following command::
 
-    $ apt-get install -y jackd2 \
+    $ apt-get install -y python-pip\
+                         jackd2 \
                          python-gst-1.0 \ 
+                         python-gi \
                          libgstrtspserver-1.0 \
                          gstreamer1.0-plugins-bad\ 
                          libgstreamer-plugins-bad1.0
@@ -112,6 +114,7 @@ If you want to use another filename, just give that as an argumento to the progr
 An example configuration file is in config/client.json:
 
 .. code-block:: json
+
     {
         "key": "key1",
         "name": "porto",
@@ -143,6 +146,7 @@ MATRIZ_CONFIG_FILE environment variable or, if not set, from a file called clien
 where the program was invoked. An example configuration file can be found in config/clients.json:
 
 .. code-block:: json
+
 	{
 	  "client_keys": [
 		{"name": "porto", "key": "key1"},
