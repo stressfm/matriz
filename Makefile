@@ -63,3 +63,12 @@ dist: clean
 	python setup.py sdist
 	python setup.py bdist_wheel
 	ls -l dist
+
+patch: clean
+	bumpversion patch --commit --tag
+
+minor: clean
+	bumpversion minor --commit --tag
+
+major: clean
+	bumpversion major --commit --tag
