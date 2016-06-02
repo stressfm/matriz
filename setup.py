@@ -65,6 +65,7 @@ setup(
         'websocket-client==0.35.0',
         'wheel==0.24.0',
         'JACK-Client==0.4.0',
+        'miniupnpc==1.9',
     ],
     zip_safe=False,
     keywords='matriz, networked music performance',
