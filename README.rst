@@ -9,7 +9,7 @@ Matriz
         :target: https://badge.fury.io/py/matriz
 
 
-Matriz is a `Networked Music Performance <https://en.wikipedia.org/wiki/Networked_music_performance>`_ software.  
+Matriz is a `Networked Music Performance <https://en.wikipedia.org/wiki/Networked_music_performance>`_ software.
 The intended use is allowing real time musical performance of artists in different locations through computer networks.
 The name "matriz" is portuguese for "matrix" and is inspired on the light and sound matrixes used in music and theater settings.
 
@@ -17,9 +17,9 @@ The name "matriz" is portuguese for "matrix" and is inspired on the light and so
 Why?
 ----
 
-* Tools like `jacktrip <https://ccrma.stanford.edu/groups/soundwire/software/jacktrip/>`_ are built 
-  to work in high bandwidth academic networks like the internet2 or GEANT networks. 
-  Matriz is built to offer the lowest latencies possible, while using the lest bandwidth possible. 
+* Tools like `jacktrip <https://ccrma.stanford.edu/groups/soundwire/software/jacktrip/>`_ are built
+  to work in high bandwidth academic networks like the internet2 or GEANT networks.
+  Matriz is built to offer the lowest latencies possible, while using the lest bandwidth possible.
   This allows musician to have low latency high quality music streaming using regular network connections.
 * For fun.
 
@@ -27,7 +27,7 @@ Features
 --------
 
 * Low latency (using OPUS codec)
-* Easy to use and extend 
+* Easy to use and extend
 * Tested in live performances
 * Documentation: https://matriz.readthedocs.org.
 
@@ -46,7 +46,7 @@ Distances between groups ranged from tens of meters (same building) to 150 to 40
 The hardware used was a Raspberry pi 2 with a Focusrite Scarlet 2i2 USB sound card.
 The resulting streams where broadcasted live at http://stress.fm.
 More information, including recordings of the performances, can be obtained at the project website: http://matriz.stress.fm.
-For any inquiries concerning the software or the project, contact us at info@stress.fm. 
+For any inquiries concerning the software or the project, contact us at info@stress.fm.
 
 Installation
 ------------
@@ -62,13 +62,20 @@ In both cases external dependencies must be installed for the program to work. F
 
 These can be installed in Debian or Rapsbian whith the following command::
 
-    $ apt-get install -y python-pip\
+    $ echo "deb http://matriz.stress.fm/deb_repo jessie main" | sudo tee /etc/apt/sources.list.d/matriz.list
+    $ curl http://matriz.stress.fm/deb_repo/matriz_deb.gpg.asc | sudo apt-key add -
+    $ sudo apt-get update
+
+    $ sudo apt-get install -y python-pip\
                          jackd2 \
-                         python-gst-1.0 \ 
+                         python-gst-1.0 \
                          python-gi \
-                         libgstrtspserver-1.0 \
-                         gstreamer1.0-plugins-bad\ 
-                         libgstreamer-plugins-bad1.0
+                         libgstrtspserver-1.0-0 \
+                         gstreamer1.0-plugins-bad \
+                         libgstreamer-plugins-bad1.0 \
+                         gir1.2-gst-rtsp-server-1.0 \
+                         python-dev \
+                         libffi-dev
 
 
 For the server, if you want to stream the performance, you might want to install and configure:
@@ -90,8 +97,8 @@ In the machine where the server will run, server dependencies must be explicitly
 Using ansible
 .............
 A set of ansible playbooks is supplied in the ansible directory. These where used to install the clients in Raspberry Pi 2 machines
-and the server in a Linode instance, all running Debian Jessie (Raspbian for the pis). All dependencies are installed and supervisord 
-is used to run the programs. Be aware that these might need heavy modifications to work in another setup. 
+and the server in a Linode instance, all running Debian Jessie (Raspbian for the pis). All dependencies are installed and supervisord
+is used to run the programs. Be aware that these might need heavy modifications to work in another setup.
 
 
 Usage
@@ -105,7 +112,7 @@ To use the client open a shell and just type::
 
     $ matriz
 
-without arguments, to start the client. The program will try to read configuration options from a file 
+without arguments, to start the client. The program will try to read configuration options from a file
 called client.json in the same directory where the program was invoked.
 If you want to use another filename, just give that as an argumento to the program::
 
@@ -126,14 +133,14 @@ An example configuration file is in config/client.json:
         "ca_crt": "fake_ca.crt"
     }
 
-`key:` supposed to be unique id for client  
-`name:` some label  identifying the client  
-`url:` the configuration server url  
-`interface:` network card to start de emitter on  
-`port:` port for emitter to listen on  
-`client_pem:` openssl key for secure websockets  
-`client_crt:` openssl client certificate  
-`ca_crt:` openssl server certificate  
+`key:` supposed to be unique id for client
+`name:` some label  identifying the client
+`url:` the configuration server url
+`interface:` network card to start de emitter on
+`port:` port for emitter to listen on
+`client_pem:` openssl key for secure websockets
+`client_crt:` openssl client certificate
+`ca_crt:` openssl server certificate
 
 To get a list of command line arguments type::
 
@@ -142,7 +149,7 @@ To get a list of command line arguments type::
 Server
 ......
 The configuration server is just a single file Flask app (matriz/config_server.py). For deployment instructions consult the Flask documentation at http://flask.pocoo.org. The server will try to read configuration options from the file given in the
-MATRIZ_CONFIG_FILE environment variable or, if not set, from a file called clients.json in the same directory 
+MATRIZ_CONFIG_FILE environment variable or, if not set, from a file called clients.json in the same directory
 where the program was invoked. An example configuration file can be found in config/clients.json:
 
 .. code-block:: json
@@ -169,7 +176,7 @@ Partners
 * Osso
 * Trienal de Arquitectura de Lisboa
 * Digitópia - Casa da Música
-* Câmara Municipal de Montemor-o-Novo. 
+* Câmara Municipal de Montemor-o-Novo.
 
 Funding
 -------
