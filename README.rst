@@ -77,6 +77,16 @@ These can be installed in Debian or Rapsbian whith the following command::
                          python-dev \
                          libffi-dev
 
+    # For the PI
+
+    $ curl https://raw.githubusercontent.com/stressfm/matriz/master/config/etc-dbus-1-system.d-matriz-jackd.conf | sudo tee /etc/dbus-1/system.d/matriz_jackd.conf >/dev/null
+    $ curl https://raw.githubusercontent.com/stressfm/matriz/master/config/boot-config.txt | sudo tee /boot/config.txt > /dev/null
+    $ curl https://raw.githubusercontent.com/stressfm/matriz/master/config/boot-cmdline.txt | sudo tee /boot/cmdline.txt >/dev/null
+    $ curl https://raw.githubusercontent.com/stressfm/matriz/master/config/supervisord.conf | sudo tee /etc/supervisord.conf >/dev/null
+    $ sudo pip install supervisor
+    $ sed -i "$(wc -l /etc/rc.local | cut -d' ' -f1)i supervisord -c /etc/supervisord.conf" /etc/rc.local
+    $ sudo reboot
+
 
 For the server, if you want to stream the performance, you might want to install and configure:
 
