@@ -109,7 +109,7 @@ Install Script for Raspberry Pi
 
 Or simply run the following command which performs all the steps above (Raspberry Pi specific *DO NOT* use on other OS)::
 
-    curl https://raw.githubusercontent.com/stressfm/matriz/master/scripts/install.sh | bash -
+    curl https://raw.githubusercontent.com/stressfm/matriz/master/scripts/install.sh | sudo bash -
 
 Usage
 -----
