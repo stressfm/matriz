@@ -19,5 +19,9 @@ curl https://raw.githubusercontent.com/stressfm/matriz/master/config/supervisord
 for cpu in /sys/devices/system/cpu/cpu[0-9]*; do echo -n performance > $cpu/cpufreq/scaling_governor; done
 pip install supervisor
 sed -i "$(wc -l /etc/rc.local | cut -d' ' -f1)i supervisord -c /etc/supervisord.conf" /etc/rc.local
+sed -i "$(wc -l /etc/rc.local | cut -d' ' -f1)i echo performance > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor" /etc/rc.local
+sed -i "$(wc -l /etc/rc.local | cut -d' ' -f1)i echo performance > /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor" /etc/rc.local
+sed -i "$(wc -l /etc/rc.local | cut -d' ' -f1)i echo performance > /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor" /etc/rc.local
+sed -i "$(wc -l /etc/rc.local | cut -d' ' -f1)i echo performance > /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor" /etc/rc.local
 pip install matriz
 reboot
