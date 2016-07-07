@@ -6,6 +6,8 @@ from setuptools import setup, find_packages
 # To use a consistent encoding
 from codecs import open
 from os import path
+from distutils.core import setup
+from Cython.Build import cythonize
 
 
 here = path.abspath(path.dirname(__file__))
@@ -37,6 +39,7 @@ setup(
     url=matriz.__url__,
     license=license,
     packages=find_packages(exclude=('tests*', 'docs')),
+    ext_modules=cythonize(["matriz/*.pyx"]),
     extras_require={
         'server': [
             'Flask',
