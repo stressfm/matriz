@@ -12,10 +12,11 @@ apt-get install -y python-pip\
                    python-dev \
                    libffi-dev
 
-curl https://raw.githubusercontent.com/stressfm/matriz/master/config/etc-dbus-1-system.d-matriz-jackd.conf | tee /etc/dbus-1/system.d/matriz_jackd.conf >/dev/null
-curl https://raw.githubusercontent.com/stressfm/matriz/master/config/boot-config.txt | tee /boot/config.txt > /dev/null
-curl https://raw.githubusercontent.com/stressfm/matriz/master/config/boot-cmdline.txt | tee /boot/cmdline.txt >/dev/null
-curl https://raw.githubusercontent.com/stressfm/matriz/master/config/supervisord.conf | tee /etc/supervisord.conf >/dev/null
+curl https://raw.githubusercontent.com/stressfm/matriz/master/config/etc-dbus-1-system.d-matriz_jackd.conf > /etc/dbus-1/system.d/matriz_jackd.conf
+curl https://raw.githubusercontent.com/stressfm/matriz/master/config/boot-config.txt > /boot/config.txt
+curl https://raw.githubusercontent.com/stressfm/matriz/master/config/boot-cmdline.txt > /boot/cmdline.txt
+curl https://raw.githubusercontent.com/stressfm/matriz/master/config/supervisord.conf > /etc/supervisord.conf
+for cpu in /sys/devices/system/cpu/cpu[0-9]*; do echo -n performance > $cpu/cpufreq/scaling_governor; done
 pip install supervisor
 sed -i "$(wc -l /etc/rc.local | cut -d' ' -f1)i supervisord -c /etc/supervisord.conf" /etc/rc.local
 pip install matriz
