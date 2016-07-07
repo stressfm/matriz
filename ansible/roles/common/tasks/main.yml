@@ -1,8 +1,0 @@
----
-- include: configure_pi.yml
-- include: configure_locale.yml
-- include: setup_deploy_user.yml 
-- include: install_packages.yml
-- include: setup_git_repo.yml
-- include: setup_jackd.yml
-

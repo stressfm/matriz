@@ -1,9 +1,0 @@
----
-- name: clone git repo 
-  git: clone name={{ project_repo }} 
-  sudo: no
-  args:
-      chdir: "{{ deploy_dir }}"
-      creates: "{{ deploy_dir }}/{{ project_name }}"
-  tags:
-      - server

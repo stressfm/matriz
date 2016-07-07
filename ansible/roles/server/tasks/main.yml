@@ -1,4 +1,0 @@
----
-- include: setup_vcs_repo.yml 
-- include: setup_virtualenv.yml
-- include: setup_nginx.yml

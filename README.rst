@@ -104,12 +104,12 @@ In the machine where the server will run, server dependencies must be explicitly
 
     $ pip install matriz[server]
 
-Using ansible
-.............
-A set of ansible playbooks is supplied in the ansible directory. These where used to install the clients in Raspberry Pi 2 machines
-and the server in a Linode instance, all running Debian Jessie (Raspbian for the pis). All dependencies are installed and supervisord
-is used to run the programs. Be aware that these might need heavy modifications to work in another setup.
+Install Script for Raspberry Pi
+...............................
 
+Or simply run the following command which performs all the steps above (Raspberry Pi specific *DO NOT* use on other OS)::
+
+    curl https://raw.githubusercontent.com/stressfm/matriz/master/scripts/install.sh | bash -
 
 Usage
 -----
