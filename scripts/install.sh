@@ -16,8 +16,9 @@ curl https://raw.githubusercontent.com/stressfm/matriz/master/config/etc-dbus-1-
 curl https://raw.githubusercontent.com/stressfm/matriz/master/config/boot-config.txt > /boot/config.txt
 curl https://raw.githubusercontent.com/stressfm/matriz/master/config/boot-cmdline.txt > /boot/cmdline.txt
 curl https://raw.githubusercontent.com/stressfm/matriz/master/config/supervisord.conf > /etc/supervisord.conf
-for cpu in /sys/devices/system/cpu/cpu[0-9]*; do echo -n performance > $cpu/cpufreq/scaling_governor; done
 pip install supervisor
+sed -i "$(wc -l /etc/rc.local | cut -d' ' -f1)i for cpu in /sys/devices/system/cpu/cpu[0-9]*; do echo -n performance > $cpu/cpufreq/scaling_governor; done" /etc/rc.local
+sed -i "$(wc -l /etc/rc.local | cut -d' ' -f1)i sudo mount -o remount,size=256M /dev/shm" /etc/rc.local
 sed -i "$(wc -l /etc/rc.local | cut -d' ' -f1)i supervisord -c /etc/supervisord.conf" /etc/rc.local
 sed -i "$(wc -l /etc/rc.local | cut -d' ' -f1)i echo performance > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor" /etc/rc.local
 sed -i "$(wc -l /etc/rc.local | cut -d' ' -f1)i echo performance > /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor" /etc/rc.local

@@ -41,6 +41,7 @@ SERVER_URL = "wss://matriz.stress.fm/config"
 
 CONFIG = {
     "python": True,
+    "receive": True,
     "key": "key2",
     "name": "",
     "url": "ws://matriz.stress.fm/config",
@@ -117,6 +118,7 @@ class Matriz:
         self.config_server_url = config["url"]
         self.port = config["port"]
         self.python = config["python"]
+        self.receive = config["receive"]
         self.name = config["name"]
         self.key = config["key"]
         self.record = config["record"]
@@ -134,7 +136,9 @@ class Matriz:
             logging.debug(message)
         except:
             logging.debug("[Error] Couldn't read message: %s" % (message, ))
-            return False
+            return
+        if not self.receive:
+            return
         logging.debug("Running receivers: {}".format(Receiver.receivers))
         for client in message["clients"]:
             name = client["name"]
