@@ -19,8 +19,8 @@ Why?
 
 * Tools like `jacktrip <https://ccrma.stanford.edu/groups/soundwire/software/jacktrip/>`_ are built
   to work in high bandwidth academic networks like the internet2 or GEANT networks.
-  Matriz is built to offer the lowest latencies possible, while using the lest bandwidth possible.
-  This allows musician to have low latency high quality music streaming using regular network connections.
+  Matriz is built to offer the lowest latencies possible, while using the least bandwidth possible.
+  This allows musicians to have low latency high quality music streaming using regular network connections.
 * For fun.
 
 Features
@@ -79,11 +79,13 @@ These can be installed in Debian or Rapsbian whith the following command::
 
     # For the PI
 
-    $ curl https://raw.githubusercontent.com/stressfm/matriz/master/config/etc-dbus-1-system.d-matriz-jackd.conf | sudo tee /etc/dbus-1/system.d/matriz_jackd.conf >/dev/null
+    $ curl https://raw.githubusercontent.com/stressfm/matriz/master/config/etc-dbus-1-system.d-matriz_jackd.conf | sudo tee /etc/dbus-1/system.d/matriz_jackd.conf >/dev/null
     $ curl https://raw.githubusercontent.com/stressfm/matriz/master/config/boot-config.txt | sudo tee /boot/config.txt > /dev/null
     $ curl https://raw.githubusercontent.com/stressfm/matriz/master/config/boot-cmdline.txt | sudo tee /boot/cmdline.txt >/dev/null
     $ curl https://raw.githubusercontent.com/stressfm/matriz/master/config/supervisord.conf | sudo tee /etc/supervisord.conf >/dev/null
     $ for cpu in /sys/devices/system/cpu/cpu[0-9]*; do echo -n performance | sudo tee $cpu/cpufreq/scaling_governor; done
+    $ sed -i "$(wc -l /etc/rc.local | cut -d' ' -f1)i for cpu in /sys/devices/system/cpu/cpu[0-9]*; do echo -n performance > $cpu/cpufreq/scaling_governor; done" /etc/rc.local
+    $ sed -i "$(wc -l /etc/rc.local | cut -d' ' -f1)i sudo mount -o remount,size=256M /dev/shm" /etc/rc.local
     $ sudo pip install supervisor
     $ sed -i "$(wc -l /etc/rc.local | cut -d' ' -f1)i supervisord -c /etc/supervisord.conf" /etc/rc.local
     $ sudo reboot
