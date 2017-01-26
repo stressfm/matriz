@@ -50,6 +50,8 @@ CONFIG = {
     "client_pem": "",
     "client_crt": "",
     "ca_crt": ""
+    "receive_from_ip": None,
+    "recieve_from_port", None,
 }
 
 LOGGER_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
@@ -124,6 +126,10 @@ class Matriz:
         self.record = config["record"]
         self.upnp_client = miniupnpc.UPnP()
         self.connection_attempts = 0
+        if config["receive_from_ip"] is not None and config["receive_from_port"] is not None:
+            logging.debug("Starting receiver for {}".format(name))
+            receiver = Receiver(**{"ip": config["receive_from_ip"], "port": config["receive_from_port"]})
+            receiver()
         atexit.register(self.cleanup)
         signal.signal(signal.SIGINT, self.cleanup)
         GObject.threads_init()
