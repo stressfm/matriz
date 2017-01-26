@@ -250,7 +250,7 @@ class Matriz:
         # self.jack_client = JackClient()
         # self.jack_client()
         if self.receive_from_ip is not None and self.receive_from_port is not None:
-            logging.debug("Starting receiver from config file: {}:{}".format(self.receive_from_ip, config[self.receive_from_port))
+            logging.debug("Starting receiver from config file: {}:{}".format(self.receive_from_ip, self.receive_from_port))
             receiver = Receiver(**{"ip": self.receive_from_ip, "port": self.receive_from_port})
             receiver()
         self.connect()
