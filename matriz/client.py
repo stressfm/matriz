@@ -126,14 +126,12 @@ class Matriz:
         self.record = config["record"]
         self.upnp_client = miniupnpc.UPnP()
         self.connection_attempts = 0
+        self.receive_from_ip = config["receive_from_ip"]
+        self.receive_from_port = config["receive_from_port"]
         atexit.register(self.cleanup)
         signal.signal(signal.SIGINT, self.cleanup)
         GObject.threads_init()
         Gst.init(None)
-        if config["receive_from_ip"] is not None and config["receive_from_port"] is not None:
-            logging.debug("Starting receiver from config file: {}:{}".format(config["receive_from_ip"], config["receive_from_port"]))
-            receiver = Receiver(**{"ip": config["receive_from_ip"], "port": config["receive_from_port"]})
-            receiver()
 
     def on_message(self, ws, message):
         try:
@@ -251,6 +249,10 @@ class Matriz:
             time.sleep(0.1)
         # self.jack_client = JackClient()
         # self.jack_client()
+        if self.receive_from_ip is not None and self.receive_from_port is not None:
+            logging.debug("Starting receiver from config file: {}:{}".format(self.receive_from_ip, config[self.receive_from_port))
+            receiver = Receiver(**{"ip": self.receive_from_ip, "port": self.receive_from_port})
+            receiver()
         self.connect()
 
     def connect(self):
