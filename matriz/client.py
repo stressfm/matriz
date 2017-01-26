@@ -51,7 +51,7 @@ CONFIG = {
     "client_crt": "",
     "ca_crt": "",
     "receive_from_ip": None,
-    "recieve_from_port", None,
+    "receive_from_port": None,
 }
 
 LOGGER_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
