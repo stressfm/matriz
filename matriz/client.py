@@ -49,7 +49,7 @@ CONFIG = {
     "record": False,
     "client_pem": "",
     "client_crt": "",
-    "ca_crt": ""
+    "ca_crt": "",
     "receive_from_ip": None,
     "recieve_from_port", None,
 }
