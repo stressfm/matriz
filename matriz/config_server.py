@@ -20,6 +20,16 @@ from subprocess import Popen, PIPE, STDOUT
 
 import logging
 
+
+CONFIG = {"client_keys": [
+                {"name": "porto", "key": "key1"},
+                {"name": "montemor", "key": "key2"},
+                {"name": "lisboa", "key": "key3"},
+                {"name": "marte", "key": "key666"}
+            ],
+            "monitor_key": {"name": "monitor", "key": "monitorkey"}
+         }
+
 LOGGER_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 logger = logging.getLogger(__name__)
 logging.basicConfig(
@@ -35,17 +45,24 @@ else:
 if os.path.exists(config_file):
     cfg = open(config_file, 'r')
     config = json.load(cfg)
-    try:
-        client_keys = [client["key"] for client in config['client_keys']]
-        monitor_key = config['monitor_key']["key"]
-    except:
-        print "Bad configuration file: %s" % (config_file)
-        exit(1)
+    CONFIG.update(config)
     cfg.close()
-
 else:
     print "No configuration file found"
+
+config = CONFIG
+
+try:
+    client_keys = [client["key"] for client in config['client_keys']]
+    monitor_key = config['monitor_key']["key"]
+except:
+    print "Bad configuration file: %s" % (config_file)
     exit(1)
+
+try:
+    connections = config["connections"]
+except KeyError:
+    pass
 
 clients = {}
 # webclients = []
@@ -65,7 +82,7 @@ websocket = GeventWebSocket(app)
 
 def config_liq():
     """
-    Change IPs for lisboa,porto,montemor
+    Change IPs for lisboa, porto, montemor
     Restart Liquidsoap if necessary
     """
 
@@ -96,18 +113,19 @@ def config_liq():
 
 
 def check_rtsp_port(address=None, port=8554):
+    """
+    Checks if a given port is open and accepting coonections.
+    """
     s = socket.socket()
     s.settimeout(5.0)
-    con = True
+    connected = True
     try:
         s.connect((address, int(port)))
-        con = True
-        mes = "Port %d at %s is open" % (int(port), address,)
+        messsage = "Port %d at %s is open" % (int(port), address,)
     except socket.error as e:
-        con = False
-        mes = "%s" % e
-
-    return (con, mes)
+        conected = False
+        message = "%s" % e
+    return connected, message
 
 
 def get_clients(web=False, rliq=False, refresh=False):
@@ -157,19 +175,18 @@ class Client(object):
         # logging.debug("Starting Register")
         restart_liquidsoap = False
         if self.key in client_keys:
-            rtsp_port = self.port
-            response = {"name": self.name, "ip": self.ip, "port": rtsp_port}
+            response = {"name": self.name, "ip": self.ip, "port": self.port}
 
             # logging.debug("checking port")
-            check = check_rtsp_port(address=self.ip, port=rtsp_port)
+            connected, message = check_rtsp_port(address=self.ip, port=self.port)
 
-            if check[0]:
-                # logging.debug("istream is True")
+            if connected:
+                # logging.debug("stream is True")
                 self.stream = True
             else:
                 # logging.debug("stream is False")
                 self.stream = False
-            response.update({"stream": self.stream, "message": check[1]})
+            response.update({"stream": self.stream, "message": message})
             logging.debug("[Register %s] %s" % (response["name"], response))
 
             self.registered = True

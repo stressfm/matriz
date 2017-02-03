@@ -6,3 +6,6 @@ apt-cache
 .python-version
 *.log
 ansible/keystore
+build/
+dist/
+*.egg-info
